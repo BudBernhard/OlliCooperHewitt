@@ -1,121 +1,120 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <title>Mapbox Tutorial</title>
-  
-  
-  
-      <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <title>Mapbox Tutorial</title>
 
-  
+
+    <link rel="stylesheet" href="css/style.css">
+
+
 </head>
 
 <body>
 
-  <html>
+<html>
 
 <head>
-  <meta charset='utf-8' />
-  <title></title>
-  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js'></script>
-  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet' />
-  <style></style>
-  <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v2.0.0/turf.min.js' charset='utf-8'></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <meta charset='utf-8'/>
+    <title></title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet'/>
+    <style></style>
+    <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v2.0.0/turf.min.js' charset='utf-8'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 
 </head>
 
 <body>
 <div>
-  <hq>
+    <hq>
 </div>
-  <div id='map'></div>
-  <div class='overlay'>
+<div id='map'></div>
+<div class='overlay'>
     <!-- <h1 id='title'>Next Stop: 5th Ave and 86 St</h1> -->
     <button id='replay'></button>
 
- <!–– Ticker -->
+    <!–– Ticker -->
     <div class="ticker">
-  <div class="ticker-logo">
-    <div class="ticker-logo-channel">
-      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="160px" height="160px" viewBox="0 0 500 500">
-      <style>.st0{fill:#fff;}</style>
-      <g id="BG" display="none">
-        <rect x="-14.5" y="-9.5" display="inline" fill="#B87D2B" stroke="#FFFFFF" stroke-miterlimit="10" width="533" height="523"/>
-      </g>
-      <g id="Circle">
-      </g>
-      <g id="Numeral">
-        <g>
-          <g>
-            <circle fill="#495354" cx="244.5" cy="244.5" r="244.5"/>
-            <circle fill="#BBCBCD" cx="253.982" cy="244.5" r="244.5"/>
-            <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="36.5742" y1="243.8232" x2="470.0361" y2="243.8232">
-              <stop  offset="0" style="stop-color:#0E6378"/>
-              <stop  offset="1" style="stop-color:#1C87A4"/>
-            </linearGradient>
-            <circle fill="url(#SVGID_1_)" cx="253.305" cy="243.823" r="216.731"/>
-          </g>
-          <g>
-            <path class="st0" d="M407.9,188.6c1.3-1.2,2.1-2.8,2.1-4.6v-52.7c0-3.4-2.7-6.1-6.1-6.1c-1.5,0-2.9,0.5-4,1.5l-149.8,131
+        <div class="ticker-logo">
+            <div class="ticker-logo-channel">
+                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="160px" height="160px"
+                     viewBox="0 0 500 500">
+                    <style>.st0 {
+                        fill: #fff;
+                    }</style>
+                    <g id="BG" display="none">
+                        <rect x="-14.5" y="-9.5" display="inline" fill="#B87D2B" stroke="#FFFFFF" stroke-miterlimit="10"
+                              width="533" height="523"/>
+                    </g>
+                    <g id="Circle">
+                    </g>
+                    <g id="Numeral">
+                        <g>
+                            <g>
+                                <circle fill="#495354" cx="244.5" cy="244.5" r="244.5"/>
+                                <circle fill="#BBCBCD" cx="253.982" cy="244.5" r="244.5"/>
+                                <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="36.5742" y1="243.8232"
+                                                x2="470.0361" y2="243.8232">
+                                    <stop offset="0" style="stop-color:#0E6378"/>
+                                    <stop offset="1" style="stop-color:#1C87A4"/>
+                                </linearGradient>
+                                <circle fill="url(#SVGID_1_)" cx="253.305" cy="243.823" r="216.731"/>
+                            </g>
+                            <g>
+                                <path class="st0" d="M407.9,188.6c1.3-1.2,2.1-2.8,2.1-4.6v-52.7c0-3.4-2.7-6.1-6.1-6.1c-1.5,0-2.9,0.5-4,1.5l-149.8,131
 			l-149.8-131c-2.5-2.2-6.4-2-8.6,0.6c-1,1.1-1.5,2.5-1.5,4V184c0,1.7,0.8,3.4,2.1,4.6l7.8,6.8V310l-7.3,5c-1.7,1.1-2.6,3-2.6,5
 			v49.1c0,3.4,2.7,6.1,6.1,6.1c1.2,0,2.4-0.4,3.4-1.1l114.6-78.7l31.7,27.8c2.3,2,5.7,2,8,0l58.1-50.8v38c0,2,1,3.9,2.6,5l85.6,58.8
 			c2.8,1.9,6.6,1.2,8.5-1.6c0.7-1,1.1-2.2,1.1-3.5V320c0-2-1-3.9-2.6-5l-7.3-5V195.4L407.9,188.6z M108.1,346.7v-20.5l9.9-6.8V187.3
 			l-9.9-8.7v-21.3l27,23.6v126.7l47.4-32.6l13.1,11.5L108.1,346.7z M347.2,315.8l-17.1-11.8v-71.1l-80,70l-80-70v27.7L153,272.4
 			v-75.8l97.1,84.9l97.1-84.9V315.8z M392.1,178.7l-9.9,8.7v132l9.9,6.8v20.5l-27-18.6V180.9l27-23.6V178.7z"/>
-          </g>
-        </g>
-      </g>
-      </svg>
-    </div>
-  </div>
-  <div class="ticker-tip">
-    <div class="ticker-tip-info">
-      <i class ="icon-info">i</i>
-          <!-- <h1 id='title'>Next Stop: 5th Ave and 86 St</h1> -->
-<span id='title'>Next Stop: 5th Ave and 86 St<span>
-     </div>
-  </div>
-  <div class="ticker-title">
-    <span>Breaking News</span>
-    <span>Breaking News</span>
-    <span>Breaking News</span>
-    <span>Breaking News</span>
-    <span>Breaking News</span>
-    <span>Breaking News</span>
-    <span>Breaking News</span>
-    <span>Breaking News</span>
-    <span>Breaking News</span>
-    <span>Breaking News</span>
-  </div>
-  <div class="ticker-news">
+                            </g>
+                        </g>
+                    </g>
+                </svg>
+            </div>
+        </div>
+        <div class="ticker-tip">
+            <div class="ticker-tip-info">
+                <i class="icon-info">i</i>
+                <!-- <h1 id='title'>Next Stop: 5th Ave and 86 St</h1> -->
+                <span id='title'>Next Stop: 5th Ave and 86 St<span>
+            </div>
+        </div>
+        <div class="ticker-title">
+            <span>Breaking News</span>
+            <span>Breaking News</span>
+            <span>Breaking News</span>
+            <span>Breaking News</span>
+            <span>Breaking News</span>
+            <span>Breaking News</span>
+            <span>Breaking News</span>
+            <span>Breaking News</span>
+            <span>Breaking News</span>
+            <span>Breaking News</span>
+        </div>
+        <div class="ticker-news">
     <span>
     	<span> Today the Consumer Technology Association (CTA)™ Foundation announced an alliance with IBM and Local Motors to help create the world's most accessible, self-driving vehicle. The CTA Foundation, a public foundation with the mission to link seniors and people with disabilities with technologies to enhance their lives. </span>
-      <!-- <span>Criminals attempt brazen robbery at downtown bank...</span>
-      <span>Citizens are encouraged to use alternate routes during rush hour...</span>
-      <span>Expect evening commute delays due to pure chaos and mayhem...</span>
-      <span>Criminals attempt brazen robbery at downtown bank...</span>
-      <span>Citizens are encouraged to use alternate routes during rush hour...</span> -->
+        <!-- <span>Criminals attempt brazen robbery at downtown bank...</span>
+        <span>Citizens are encouraged to use alternate routes during rush hour...</span>
+        <span>Expect evening commute delays due to pure chaos and mayhem...</span>
+        <span>Criminals attempt brazen robbery at downtown bank...</span>
+        <span>Citizens are encouraged to use alternate routes during rush hour...</span> -->
     </span>
-  </div>
-</div>
+        </div>
+    </div>
 
-<!-- End Of Overlay -->
-  </div>
+    <!-- End Of Overlay -->
+</div>
 </body>
 
 </html>
-  <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v2.0.0/turf.min.js'></script>
-
-  
-
-    <script  src="js/index.js"></script>
-
-
+<script src='https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v2.0.0/turf.min.js'></script>
+<script src="js/index.js"></script>
 
 
 </body>
