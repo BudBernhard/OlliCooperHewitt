@@ -2,27 +2,45 @@ mapboxgl.accessToken =
  "pk.eyJ1IjoiYnVkZHliIiwiYSI6ImtseXhGOTQifQ.f2aqgCg7-rXrhy5FxYcLSw";
 
 // Application parameters
-var dev = false;
+var dev = true;
 var scaleFactor = dev ? .1 : 1;
 var newYorkStops = [
   { coordinates: [-73.95809412002563, 40.78471909639683],
       steps: 0,
-      name: "Cooper Hewitt"},
-  { coordinates: [-73.96043300628662, 40.78155693112764],
+      name: "Cooper Hewitt",
+      waitDuration: null},
+  { coordinates: [-73.962302, 40.778961],
     steps: 4000  * scaleFactor,
-    name: "5th Ave and 86th St"},
-  { coordinates: [-73.95551919937134, 40.77946904778007],
+    name: "Metropolitan Museum of Art",
+    waitDuration: 1000 * scaleFactor},
+  { coordinates: [-73.955870, 40.776272],
+    steps: 2500  * scaleFactor,
+    name: "3rd and 86th - Transfer to 4, 5, 6, and Q",
+    waitDuration: 0},
+  { coordinates: [-73.953971, 40.778741],
+    steps: 2500  * scaleFactor,
+    name: "3rd and 86th - Transfer to 4, 5, 6, and Q",
+    waitDuration: 0},
+  { coordinates: [-73.944783, 40.774948],
+    steps: 2500  * scaleFactor,
+    name: "Carl Schurz Park",
+    waitDuration: 1000 * scaleFactor},
+  { coordinates: [-73.943386, 40.776909],
     steps: 2000  * scaleFactor,
-    name: "Lexington Ave and 86th St"},
-  { coordinates: [-73.95090579986572, 40.785886845761574],
-    steps: 4000  * scaleFactor,
-    name: "Lexington Ave and 96th St"},
-  { coordinates: [-73.95578742027283, 40.78790141900539],
+    name: "Cooper Hewitt Museum",
+    waitDuration: 0},
+  { coordinates: [-73.955672, 40.782072],
     steps: 2000  * scaleFactor,
-    name: "5th Ave and 96th St"},
+    name: "Cooper Hewitt Museum",
+    waitDuration: 0},
+  { coordinates: [-73.954786, 40.783330],
+    steps: 2000  * scaleFactor,
+    name: "Cooper Hewitt Museum",
+    waitDuration: 0},
   { coordinates: [-73.9581048488617, 40.78472518905549],
-    steps: 2000  * scaleFactor,
-    name: "Cooper Hewitt"}
+    steps: 2500  * scaleFactor,
+    name: "Cooper Hewitt Museum",
+    waitDuration: 1000 * scaleFactor}
 ];
 
 var rawRouteObject =
@@ -47,7 +65,7 @@ var map = new mapboxgl.Map({
  container : "map",
  style     : "mapbox://styles/mapbox/streets-v9",
  center    : [-73.958075, 40.784718],
- zoom      : 16
+ zoom      : 15
 });
 
 var olli = {
@@ -63,9 +81,6 @@ var olli = {
   }
  ]
 };
-
-//var route = JSON.parse(JSON.stringify(rawRouteObject));
-//route.features[0].geometry.coordinates = [newYorkCoordinates[0], newYorkCoordinates[1]];
 
 var route = [];
 
@@ -151,7 +166,7 @@ map.on("load", function() {
       "source": "route-"+i,
       "type": "line",
       "paint": {
-        "line-width": 2,
+        "line-width": 3,
         "line-color": "#007cbf"
       }
     });
@@ -191,10 +206,12 @@ map.on("load", function() {
  );
 
   var counter = 0;
+  var waitDurationCounter = 0;
   var stopIndex = 0;
-  var steps;
+  var steps, currentStop;
  function animate() { // Update point geometry to a new position based on counter denoting
   // the index to access the arc.
+   currentStop = newYorkStops[stopIndex+1];
   olli.features[0].geometry.coordinates = route[stopIndex].features[0].geometry.coordinates[counter];
 
   // Update the source with this new data.
@@ -203,33 +220,47 @@ map.on("load", function() {
   map.flyTo({center: olli.features[0].geometry.coordinates});
 
   steps = newYorkStops[stopIndex+1].steps;
-  console.log("Steps: ", steps);
+  if (dev) {console.log("Steps: ", steps);}
   // Request the next frame of animation so long the end has not been reached.
    if (counter < steps) {
-     console.log("animating! Counter at: ", counter);
-     console.log("Stop Index: ", stopIndex);
-     console.log("route length: ", route.length);
+     if (dev) {
+       console.log("animating! Counter at: ", counter);
+       console.log("Stop Index: ", stopIndex);
+       console.log("route length: ", route.length);
+     }
      counter = counter + 1;
      requestAnimationFrame(animate);
    } else if (steps<= counter ) {
      if (stopIndex+1 === route.length){
-       console.log("Route complete!")
+       if (dev) {console.log("Route complete!");}
      } else {
-       console.log("moving to next stop!");
-       // Update side bar / pop data for next stop
-       updateData(stopIndex + 2);
-       stopIndex += 1;
-       counter = 0;
-       animate();
+       if (dev) {
+         console.log("Arrived at next stop!");
+         console.log("Wait Duration: ", currentStop.waitDuration, "\n waitDurationCoutner: ", waitDurationCounter);}
+
+       // Check for wait time at stop
+       if (currentStop.waitDuration && waitDurationCounter < currentStop.waitDuration) {
+         console.log("Animating wait frame");
+           waitDurationCounter += 1;
+           requestAnimationFrame(animate);
+       } else {
+         if (dev) {
+           console.log("moving to next stop!");
+         }
+         // Update side bar / pop data for next stop
+         updateData(stopIndex + 2);
+         stopIndex += 1;
+         counter = 0;
+         waitDurationCounter = 0;
+         animate();
+       }
      }
-
-
-
    }
-
 }
  document.getElementById("replay").addEventListener("click", function() {
-   console.log("click!");
+   stopIndex = 0;
+   counter = 0;
+   if (dev) {console.log("click!");}
   animate(0);
 
 
