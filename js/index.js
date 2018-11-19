@@ -1,45 +1,64 @@
 mapboxgl.accessToken =
  "pk.eyJ1IjoiYnVkZHliIiwiYSI6ImtseXhGOTQifQ.f2aqgCg7-rXrhy5FxYcLSw";
 
+
+//Upper Right Hand Top Panel 
+ $('.panel-collapse').on('show.bs.collapse', function () {
+    $(this).siblings('.panel-heading').addClass('active');
+  });
+
+  $('.panel-collapse').on('hide.bs.collapse', function () {
+    $(this).siblings('.panel-heading').removeClass('active');
+  });
+
 // Application parameters
-var dev = true;
+var dev = false;
 var scaleFactor = dev ? .1 : 1;
 var newYorkStops = [
   { coordinates: [-73.95809412002563, 40.78471909639683],
       steps: 0,
       name: "Cooper Hewitt",
+      info: "Cooper Hewitt is America’s design museum. Inclusive, innovative, and experimental, the museum’s dynamic exhibitions, education programs, master’s program, publications, and online resources inspire, educate, and empower people through design.",
       waitDuration: null},
   { coordinates: [-73.962302, 40.778961],
     steps: 4000  * scaleFactor,
     name: "Metropolitan Museum of Art",
+    info: "The Metropolitan Museum of Art, the Met, has a variety of services and exciting programs that are tailored to meet the needs of visitors with disabilities.",
     waitDuration: 1000 * scaleFactor},
   { coordinates: [-73.955870, 40.776272],
     steps: 2500  * scaleFactor,
     name: "3rd and 86th - Transfer to 4, 5, 6, and Q",
+    info: "Only the 86th St and Second Ave Subway station with access to the Q is wheelchair is accessible. The elevator is on the southeast corner of 86th Street and 2nd Avenue.",
     waitDuration: 0},
   { coordinates: [-73.953971, 40.778741],
     steps: 2500  * scaleFactor,
     name: "3rd and 86th - Transfer to 4, 5, 6, and Q",
+    info: "Only the 86th St and Second Ave Subway station with access to the Q is wheelchair is accessible. The elevator is on the southeast corner of 86th Street and 2nd Avenue.",
     waitDuration: 0},
   { coordinates: [-73.944783, 40.774948],
     steps: 2500  * scaleFactor,
     name: "Carl Schurz Park",
+    info: "Wheelchair access is available at the East 84th and East 87th Street entrances and along the John Finley Walk. Gracie Mansion is wheelchair accessible",
     waitDuration: 1000 * scaleFactor},
   { coordinates: [-73.943386, 40.776909],
     steps: 2000  * scaleFactor,
     name: "Cooper Hewitt Museum",
+    info: "Cooper Hewitt is America’s design museum. Inclusive, innovative, and experimental, the museum’s dynamic exhibitions, education programs, master’s program, publications, and online resources inspire, educate, and empower people through design. For info about accessibility visit https://www.cooperhewitt.org/accessibility-at-cooper-hewitt/",
     waitDuration: 0},
   { coordinates: [-73.955672, 40.782072],
     steps: 2000  * scaleFactor,
     name: "Cooper Hewitt Museum",
+    info: "Cooper Hewitt is America’s design museum. Inclusive, innovative, and experimental, the museum’s dynamic exhibitions, education programs, master’s program, publications, and online resources inspire, educate, and empower people through design. For info about accessibility visit https://www.cooperhewitt.org/accessibility-at-cooper-hewitt/",
     waitDuration: 0},
   { coordinates: [-73.954786, 40.783330],
     steps: 2000  * scaleFactor,
     name: "Cooper Hewitt Museum",
+    info: "Cooper Hewitt is America’s design museum. Inclusive, innovative, and experimental, the museum’s dynamic exhibitions, education programs, master’s program, publications, and online resources inspire, educate, and empower people through design. For info about accessibility visit https://www.cooperhewitt.org/accessibility-at-cooper-hewitt/",
     waitDuration: 0},
   { coordinates: [-73.9581048488617, 40.78472518905549],
     steps: 2500  * scaleFactor,
     name: "Cooper Hewitt Museum",
+    info: "Cooper Hewitt is America’s design museum. Inclusive, innovative, and experimental, the museum’s dynamic exhibitions, education programs, master’s program, publications, and online resources inspire, educate, and empower people through design. For info about accessibility visit https://www.cooperhewitt.org/accessibility-at-cooper-hewitt/",
     waitDuration: 1000 * scaleFactor}
 ];
 
@@ -65,7 +84,7 @@ var map = new mapboxgl.Map({
  container : "map",
  style     : "mapbox://styles/mapbox/streets-v9",
  center    : [-73.958075, 40.784718],
- zoom      : 15
+ zoom      : 14
 });
 
 var olli = {
@@ -217,7 +236,8 @@ map.on("load", function() {
   // Update the source with this new data.
   map.getSource('olli').setData(olli);
 
-  map.flyTo({center: olli.features[0].geometry.coordinates});
+  map.flyTo({center: olli.features[0].geometry.coordinates,
+            zoom: 16});
 
   steps = newYorkStops[stopIndex+1].steps;
   if (dev) {console.log("Steps: ", steps);}
@@ -241,6 +261,11 @@ map.on("load", function() {
        // Check for wait time at stop
        if (currentStop.waitDuration && waitDurationCounter < currentStop.waitDuration) {
          console.log("Animating wait frame");
+          map.flyTo({
+        // These options control the ending camera position: centered at
+        // the target, at zoom level 9, and north up.
+        zoom: 14});
+
            waitDurationCounter += 1;
            requestAnimationFrame(animate);
        } else {
@@ -268,6 +293,7 @@ map.on("load", function() {
 
   function updateData(stopIndex) {
     document.getElementById("title").innerHTML = "Next Stop: " + newYorkStops[stopIndex].name;
+    document.getElementById("info").innerHTML = newYorkStops[stopIndex].info;
 
 
 // Ticker 
@@ -302,4 +328,3 @@ $(document).ready(function(e){
 });
 
 
-// Ticker

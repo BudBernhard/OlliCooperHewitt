@@ -3,10 +3,12 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Mapbox Tutorial</title>
+    <title>Local Motors at Cooper Hewitt</title>
 
 
     <link rel="stylesheet" href="css/style.css">
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+
 
 
 </head>
@@ -17,14 +19,18 @@
 
 <head>
     <meta charset='utf-8'/>
+    <!-- Initializing the variable of title and info LOL IDK but it works now... -->
     <title></title>
+    <info></info>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no'/>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css' rel='stylesheet'/>
     <style></style>
     <script src='https://api.tiles.mapbox.com/mapbox.js/plugins/turf/v2.0.0/turf.min.js' charset='utf-8'></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+	<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js'></script>
+
 
 </head>
 
@@ -33,8 +39,40 @@
     <hq>
 </div>
 <div id='map'></div>
+
+<div class="wrapper center-block">
+  <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+    <div class="panel-heading active" role="tab" id="headingOne">
+      <h4 class="panel-title">
+        <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          <span id='title'>Next Stop: 5th Ave and 86 St</span>
+        </a>
+      </h4>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+            
+			<span id='info'> The Metropolitan Museum of Art, the Met, has a variety of services and exciting programs that are tailored to meet the needs of visitors with disabilities. For more info, visit https://www.metmuseum.org/events/programs/access</span>
+				<br>
+				<img src="resources/GuideAnimal.png" alt="Guide Animal Accessible" style="width:20%">
+				<img src="resources/Hearing.png" alt="Hearing Accessible" style="width:20%">
+				<img src="resources/Visual.png" alt="Visual Accessible" style="width:20%">
+				<img src="resources/Wheelchair.png" alt="Wheelchair Accessible" style="width:20%">
+				<!-- <img src="resources/Elderly.png" alt="Elderly Accessible" style="width:20%"> -->
+
+
+
+
+      </div>
+    </div>
+  </div>
+  
+</div>
+</div>
+
 <div class='overlay'>
-    <!-- <h1 id='title'>Next Stop: 5th Ave and 86 St</h1> -->
+
     <button id='replay'></button>
 
     <!–– Ticker -->
@@ -81,7 +119,7 @@
             <div class="ticker-tip-info">
                 <i class="icon-info">i</i>
                 <!-- <h1 id='title'>Next Stop: 5th Ave and 86 St</h1> -->
-                <span id='title'>Next Stop: 5th Ave and 86 St<span>
+                <span id='title'>For more information visit LocalMotors.com<span>
             </div>
         </div>
         <div class="ticker-title">
